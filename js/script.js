@@ -60,6 +60,8 @@ const titleClickHandler = function(event){
         console.log(article);
 
       /* get the article id */
+      const articleId = article.getAttribute('id');
+      console.log(articleId);
 
       /* find the title element */
 

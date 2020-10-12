@@ -53,8 +53,11 @@ const titleClickHandler = function(event){
 
     /* remove contents of titleList */
     const titleList = document.querySelector(optTitleListSelector).innerHTML = '';
-    
+
     /* for each article */
+    const articles = document.querySelectorAll(optArticleSelector);
+      for(let article of articles){
+        console.log(article);
 
       /* get the article id */
 

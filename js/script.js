@@ -361,4 +361,3 @@ tagList.innerHTML = allTagsHTML;
 
   addClickListenersToAuthors();
 
-};

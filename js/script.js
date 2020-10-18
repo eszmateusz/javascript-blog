@@ -42,7 +42,8 @@
   const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
-    optArticleTagsSelector = '.post-tags .list';
+    optArticleTagsSelector = '.post-tags .list',
+    optTagsListSelector = '.tags.list';
 
   const generateTitleLinks = function(customSelector = '') {
 
@@ -86,6 +87,9 @@
   // 7.2 Druga czesc dodawania tagow
 
   const generateTags = function() {
+
+    /* [NEW] create a new variable allTags with an empty array */
+    let allTags = {};
   
     /* [DONE] find all articles */
     const articles = document.querySelectorAll(optArticleSelector);
@@ -118,6 +122,15 @@
         html = html + ' ' + linkHTML;
         console.log('html', html);
 
+        /* [NEW] check if this link is NOT already in allTags */
+        if(!allTags[tag]) {
+        
+          /* [NEW] add tag to allTags object */
+          allTags[tag] = 1;
+        } else {
+          allTags[tag]++;
+        }
+
         /* [DONE] END LOOP: for each tag */
       }
 
@@ -127,6 +140,24 @@
 
   /* [DONE] END LOOP: for every article: */
   };
+
+  /* [NEW] find list of tags in right column */
+  const tagList = document.querySelector('.tags');
+
+  /* [NEW] create variable for all links HTML code */
+  let allTagsHTML = '';
+
+  /* [NEW] START LOOP: for each tag in allTags: */
+  for(let tag in allTags){
+    
+    /* [NEW] generate code of a link and add it to allTagsHTML */
+    allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+  }
+
+/* [NEW] END LOOP: for each tag in allTags: */
+
+/*[NEW] add HTML from allTagsHTML to tagList */
+tagList.innerHTML = allTagsHTML;
 
   const tagList = document.querySelector('.tags');
   console.log('tag list',tagList);

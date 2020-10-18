@@ -24,6 +24,7 @@
 
     for (let activeArticle of activeArticles) {
       activeArticle.classList.remove('active');
+      console.log('activeArticle', activeArticle);
     }
 
     /* [DONE] get 'href' attribute from the clicked link */
@@ -43,7 +44,9 @@
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles',
     optArticleTagsSelector = '.post-tags .list',
-    optTagsListSelector = '.tags.list';
+    optTagsListSelector = '.list.tags';
+    const optCloudClassCount = 5;
+    const optCloudClassPrefix = 'tag-size-';
 
   const generateTitleLinks = function(customSelector = '') {
 
@@ -60,6 +63,7 @@
       /* [DONE] get the article id */
   
       const articleId = article.getAttribute('id');
+      console.log('articleId', articleId);
 
       /* [DONE] find the title element */
       /* [DONE] get the title from the title element */
@@ -84,6 +88,26 @@
 
   generateTitleLinks();
 
+  /* Calculate parameters */
+
+  const calculateTagsParams = function (tags) {
+    console.log('tags', tags);
+    const params = {'min':9999, 'max':0};
+    const normalizedCount = optCloudClassCount - params.min;
+    const normalizedMax = params.max - params.min;
+    const percentage = normalizedCount / normalizedMax;
+    const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+    console.log('classNumber', classNumber);
+
+    for (let tag in tags) {
+      console.log(tag + ' is used ' + tags[tag] + ' times');
+      params.max = tags[tag] > params.max ? tags[tag] : params.max;
+      params.min = tags[tag] < params.min ? tags[tag] : params.min;
+      console.log('params', params);
+      return optCloudClassPrefix + classNumber;
+    }
+  };
+
   // 7.2 Druga czesc dodawania tagow
 
   const generateTags = function() {
@@ -107,6 +131,7 @@
 
       /* [DONE] get tags from data-tags attribute */
       const articleTags = article.getAttribute('data-tags');
+      console.log('articleTags', articleTags);
 
       /* [DONE] split tags into array */
       const articleTagsArray = articleTags.split(' ');
@@ -127,7 +152,7 @@
         
           /* [NEW] add tag to allTags object */
           allTags[tag] = 1;
-        } else {
+          } else {
           allTags[tag]++;
         }
 
@@ -142,25 +167,32 @@
   };
 
   /* [NEW] find list of tags in right column */
-  const tagList = document.querySelector('.tags');
+  const tagList = document.querySelector(optTagsListSelector);
+  console.log('tagList', tagList);
+
+  const tagsParams = calculateTagsParams(allTags);
+  console.log('tagsParams:', tagsParams);
 
   /* [NEW] create variable for all links HTML code */
   let allTagsHTML = '';
 
   /* [NEW] START LOOP: for each tag in allTags: */
-  for(let tag in allTags){
-    
-    /* [NEW] generate code of a link and add it to allTagsHTML */
-    allTagsHTML += tag + ' (' + allTags[tag] + ') ';
-  }
+  for (let tag in allTags) {
 
-/* [NEW] END LOOP: for each tag in allTags: */
+    /* [NEW] generate code of a link and add it to allTagsHTML */
+    allTagsHTML += '<li><a class="calculateTagsParams(allTags[tag], tagsParams)" href="#tag-' + tag  + '"><span>' + tag + ' (' + allTags[tag] + ') ' + '</span></a></li>';
+
+  /* [NEW] END LOOP: for each tag in allTags: */
+
+}
 
 /*[NEW] add HTML from allTagsHTML to tagList */
 tagList.innerHTML = allTagsHTML;
 
-  const tagList = document.querySelector('.tags');
-  console.log('tag list',tagList);
+};
+
+//  const tagList = document.querySelector('.tags');
+//  console.log('tag list',tagList);
 
   generateTags();
 
@@ -195,7 +227,8 @@ tagList.innerHTML = allTagsHTML;
     }
 
     /* [DONE] find all tag links with "href" attribute equal to the "href" constant */
-    const tagLinks = document.querySelectorAll(href); // href?
+    const tagLinks = document.querySelectorAll(href);
+    console.log('tagLinks', tagLinks);
 
     /* [DONE] START LOOP: for each found tag link */
     for (const tagLink of tagLinks) {
@@ -328,4 +361,4 @@ tagList.innerHTML = allTagsHTML;
 
   addClickListenersToAuthors();
 
-}
+};

@@ -205,7 +205,6 @@
 
       /* [DONE] insert HTML of all the links into the tags wrapper */
       tagList.innerHTML = html;
-    }
 
   /* [DONE] END LOOP: for every article: */
   }
@@ -236,9 +235,7 @@
 tagList.innerHTML = allTagsHTML;
 
 }
-
 generateTags();
-console.log('generateTags', generateTags);
 
 // 7.2 Aktywnosc po kliknieciu
 
@@ -305,30 +302,8 @@ function addClickListenersToTags() {
 }
 
 addClickListenersToTags();
-/*
+
 // 7.2 Dodaje generate authors
-//Generate authors - poczatek chmury linkow
-
-function calculateAuthorsParams = function(authors) {
-  const params = {'min':9999, 'max':0};
-
-  for(let authorTag in authors) {
-    params.max = authors[authorTag] > params.max ? authors[authorTag] : params.max;
-    params.min = authors[authorTag] < params.min ? authors[authorTag] : params.min;
-    console.log('params', params);
-  }
-
-  return params;
-};
-
-const calculateAuthorsClass = function(count, params) {
-  const normalizedCount = count - params.min;
-  const normalizedMax = params.max - params.min;
-  const percentage = normalizedCount / normalizedMax;
-  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
-  console.log('klass author numer',classNumber);
-  return optCloudClassPrefix + classNumber;
-}; */
 
 function generateAuthors() {
 
